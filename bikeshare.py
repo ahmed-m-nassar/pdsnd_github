@@ -197,17 +197,35 @@ def user_stats(df,city):
     print('-'*40)
 
 def main():
-    """Analyze the bike share data  
+    """
+    Orchestrates the bikeshare data analysis process.
+
+    The main function interacts with the user, retrieves filter inputs, loads data, and displays statistics.
+    Users have the option to view individual trip data and restart the analysis.
+
+    Returns:
+        None
     """
     while True:
+        # Step 1: Get user input for city, month, and day filters
         city, month, day = get_filters()
+        
+        # Step 2: Load data based on user-specified filters
         df = load_data(city, month, day)
 
+        # Step 3: Display time-related statistics
         time_stats(df)
+
+        # Step 4: Display station-related statistics
         station_stats(df)
+
+        # Step 5: Display trip duration statistics
         trip_duration_stats(df)
-        user_stats(df,city)
-        
+
+        # Step 6: Display user-related statistics
+        user_stats(df, city)
+
+        # Step 7: Ask if the user wants to view individual trip data
         view_data = input("Would you like to view 5 rows of individual trip data? Enter yes or no?")
         start_loc = 0
         while view_data != 'no':
@@ -215,10 +233,10 @@ def main():
             start_loc += 5
             view_data = input("Do you wish to continue? , type 'no' to stop , otherwise we will continue : ").lower()
 
+        # Step 8: Ask if the user wants to restart the analysis
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
 
 if __name__ == "__main__":
 	main()
