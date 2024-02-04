@@ -1,3 +1,31 @@
+"""
+Bikeshare Data Analysis Script
+
+This script allows users to explore and analyze bikeshare data for three major cities in the US: Chicago, New York City, and Washington. The script provides insights into various statistics, including the most frequent times of travel, popular stations and trips, trip duration, and user demographics.
+
+Requirements:
+- Python 3
+- Pandas library
+
+Usage:
+1. Run the script.
+2. Follow the prompts to specify the city, month, and day for analysis.
+3. View statistical information about bikeshare data for the selected parameters.
+4. Optionally, view individual trip data.
+5. Restart or exit the script based on user preference.
+
+File Structure:
+- The script consists of functions to perform different tasks, including data loading, statistics calculation, and user interaction.
+- The main() function orchestrates the entire process by calling other functions based on user inputs.
+
+Refactorings:
+1. Consolidated month and day lists into a single function for better code organization.
+2. Used os.path.join for creating file paths to enhance cross-platform compatibility.
+
+Note: Ensure that the bikeshare data files (chicago.csv, new_york_city.csv, washington.csv) are available in the same directory as this script.
+
+Date: February 4, 2024
+"""
 import time
 import pandas as pd
 import numpy as np
@@ -169,15 +197,35 @@ def user_stats(df,city):
     print('-'*40)
 
 def main():
+    """
+    Orchestrates the bikeshare data analysis process.
+
+    The main function interacts with the user, retrieves filter inputs, loads data, and displays statistics.
+    Users have the option to view individual trip data and restart the analysis.
+
+    Returns:
+        None
+    """
     while True:
+        # Step 1: Get user input for city, month, and day filters
         city, month, day = get_filters()
+        
+        # Step 2: Load data based on user-specified filters
         df = load_data(city, month, day)
 
+        # Step 3: Display time-related statistics
         time_stats(df)
+
+        # Step 4: Display station-related statistics
         station_stats(df)
+
+        # Step 5: Display trip duration statistics
         trip_duration_stats(df)
-        user_stats(df,city)
-        
+
+        # Step 6: Display user-related statistics
+        user_stats(df, city)
+
+        # Step 7: Ask if the user wants to view individual trip data
         view_data = input("Would you like to view 5 rows of individual trip data? Enter yes or no?")
         start_loc = 0
         while view_data != 'no':
@@ -185,10 +233,10 @@ def main():
             start_loc += 5
             view_data = input("Do you wish to continue? , type 'no' to stop , otherwise we will continue : ").lower()
 
+        # Step 8: Ask if the user wants to restart the analysis
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
 
 if __name__ == "__main__":
 	main()
